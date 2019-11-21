@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html xmlns:th="http://thymeleaf.org" 
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" >
+<head>
+<meta charset="UTF-8">
+<title>Cadastro de Empresas</title>
+	  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"/>   
+      <link type="text/css" rel="stylesheet" href="materialize/css/materialize.min.css"  media="screen,projection"/>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+      <link rel="stylesheet" href="style/style.css" />
+</head>
+<body>
+     <header>
+    <nav>
+    <div class="nav-wrapper teal lighten-2">
+      <a href="#" class="brand-logo ">Empresa</a>
+      <ul id="nav-mobile" class="right hide-on-med-and-down">
+         <li></li>
+      </ul>
+    </div>
+  </nav>
+ </header>
+   <div th:each="company : ${company}" class="container detalhesCompany ">
+   		<div class="row">
+   			<p><b>Nome:</b> <span th:text="${company.name}"></span></p>
+   			<p><b>Login:</b> <span th:text="${company.login}"></span></p>
+   			<p><b>Senha:</b> <span th:text="${company.password}"></span></p>
+   			<p><b>Data:</b> <span th:text="${company.data}"></span></p>
+   			<p><b>Hora:</b> <span th:text="${company.horario}"></span></p>
+   		</div>
+   
+   </div>
+   <div class="container formDebtor">
+    <th:block th:include="mensagemValidacao"></th:block>
+   <form method="post">
+   
+       Nome: <input type="text" name="name" />
+       <div class="row">
+	       <div class="input-field col s6">
+	       		CPF: <input type="text" name="cpf" />
+	       </div>
+	       <div class="input-field col s6">
+	       		RG: <input type="text" name="rg" />
+	       </div>
+	       <div class="input-field col s6">
+	       		Valor: <input type="text" name="value" />
+	       </div>
+	       <div class="input-field col s6">
+	      	    Data: <input type="text" name="data" />
+	       </div>
+       </div>
+       <button type="submit" class="waves-effect waves-light btn"><i class="material-icons left">add_circle_outline</i>Salvar</button>
+       <a href="/listaCompany" class="waves-effect waves-light btn"><i class="material-icons left">arrow_back</i>Voltar</a>
+   </form>
+   </div>
+   <div class="container listDebtor">
+     <nav>
+    <div class="nav-wrapper teal lighten-2">
+      <a href="#" class="brand-logo center">Lista Inadimplentes</a>
+      <ul id="nav-mobile" class="left hide-on-med-and-down">
+        
+      </ul>
+    </div>
+  </nav>
+   <table class="container">
+ 	<thead>
+ 		<tr> 
+ 			<th> Nome </th>
+ 			<th> CPF </th>
+ 			<th> RG </th>
+ 			<th> Valor </th>
+ 			<th> Data </th>
+ 		</tr>
+ 	</thead>
+ 	<tbody>
+		<tr th:each="debtor : ${debtors}">
+ 			<td> <span th:text="${debtor.name}"> </span> </td>   
+        	<td><span th:text="${debtor.cpf}" ></span> </td>   
+        	<td><span th:text="${debtor.rg}"> </span> </td>   
+        	<td><span th:text="${debtor.value}" ></span> </td>   
+        	<td><span th:text="${debtor.data}"> </span> </td>   
+        	<td>
+	 			<a class="waves-effect waves-light btn" th:href="${(#mvc.url('CC#deletarDebtor').arg(0, debtor.cpf)).build()}">
+	 			      <i class="material-icons left">delete</i>
+	 			</a> 
+ 			</td>   
+    	</tr>
+	</tbody>
+	</div>
+</table>
+
+  
+ 
+  
+   <script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+   <script type="text/javascript" src="materialize/js/materialize.min.js"></script>
+</body>
+</html>
